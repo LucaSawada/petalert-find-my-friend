@@ -24,7 +24,7 @@ const Welcome = () => {
         </div>
 
         <ul className="space-y-4 mb-10">
-          <Feature icon={MapPin} title="Alerta em <30 segundos" desc="Foto, GPS automático, espécie. Pronto." />
+           <Feature icon={MapPin} title="Alerta em menos de 30 segundos" desc="Foto, GPS automático, espécie. Pronto." />
           <Feature icon={Heart} title="Comunidade próxima" desc="Quem está perto vê o alerta primeiro." />
           <Feature icon={PawPrint} title="Reencontros reais" desc="Marque como encontrado e celebre." />
         </ul>
