@@ -14,16 +14,175 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      messages: {
+        Row: {
+          content: string
+          created_at: string
+          id: string
+          pet_id: string
+          read_at: string | null
+          receiver_id: string
+          sender_id: string
+        }
+        Insert: {
+          content: string
+          created_at?: string
+          id?: string
+          pet_id: string
+          read_at?: string | null
+          receiver_id: string
+          sender_id: string
+        }
+        Update: {
+          content?: string
+          created_at?: string
+          id?: string
+          pet_id?: string
+          read_at?: string | null
+          receiver_id?: string
+          sender_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "messages_pet_id_fkey"
+            columns: ["pet_id"]
+            isOneToOne: false
+            referencedRelation: "pets"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      pets: {
+        Row: {
+          address: string | null
+          alt_contact: string | null
+          breed: string | null
+          color: string | null
+          created_at: string
+          description: string | null
+          found_at: string | null
+          found_message: string | null
+          id: string
+          latitude: number | null
+          longitude: number | null
+          name: string
+          photo_url: string | null
+          reward: string | null
+          size: string | null
+          species: Database["public"]["Enums"]["pet_species"]
+          status: Database["public"]["Enums"]["pet_status"]
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          address?: string | null
+          alt_contact?: string | null
+          breed?: string | null
+          color?: string | null
+          created_at?: string
+          description?: string | null
+          found_at?: string | null
+          found_message?: string | null
+          id?: string
+          latitude?: number | null
+          longitude?: number | null
+          name: string
+          photo_url?: string | null
+          reward?: string | null
+          size?: string | null
+          species: Database["public"]["Enums"]["pet_species"]
+          status?: Database["public"]["Enums"]["pet_status"]
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          address?: string | null
+          alt_contact?: string | null
+          breed?: string | null
+          color?: string | null
+          created_at?: string
+          description?: string | null
+          found_at?: string | null
+          found_message?: string | null
+          id?: string
+          latitude?: number | null
+          longitude?: number | null
+          name?: string
+          photo_url?: string | null
+          reward?: string | null
+          size?: string | null
+          species?: Database["public"]["Enums"]["pet_species"]
+          status?: Database["public"]["Enums"]["pet_status"]
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      profiles: {
+        Row: {
+          avatar_url: string | null
+          created_at: string
+          full_name: string | null
+          id: string
+          phone: string | null
+          updated_at: string
+        }
+        Insert: {
+          avatar_url?: string | null
+          created_at?: string
+          full_name?: string | null
+          id: string
+          phone?: string | null
+          updated_at?: string
+        }
+        Update: {
+          avatar_url?: string | null
+          created_at?: string
+          full_name?: string | null
+          id?: string
+          phone?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      user_roles: {
+        Row: {
+          created_at: string
+          id: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      has_role: {
+        Args: {
+          _role: Database["public"]["Enums"]["app_role"]
+          _user_id: string
+        }
+        Returns: boolean
+      }
     }
     Enums: {
-      [_ in never]: never
+      app_role: "admin" | "user"
+      pet_species: "dog" | "cat" | "other"
+      pet_status: "active" | "found"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -150,6 +309,10 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      app_role: ["admin", "user"],
+      pet_species: ["dog", "cat", "other"],
+      pet_status: ["active", "found"],
+    },
   },
 } as const
