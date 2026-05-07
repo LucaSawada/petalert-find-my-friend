@@ -35,6 +35,14 @@ const ChatRoom = () => {
       setMessages(msgs ?? []);
       setPetName(pet?.name ?? "Pet");
       setOtherName(prof?.full_name ?? "Usuário");
+      // Marca mensagens recebidas como lidas
+      await supabase
+        .from("messages")
+        .update({ read_at: new Date().toISOString() })
+        .eq("pet_id", petId)
+        .eq("receiver_id", user.id)
+        .eq("sender_id", otherId)
+        .is("read_at", null);
     })();
 
     const channel = supabase
@@ -46,6 +54,12 @@ const ChatRoom = () => {
           (m.sender_id === otherId && m.receiver_id === user?.id)
         ) {
           setMessages((prev) => [...prev, m]);
+          if (m.receiver_id === user?.id && !m.read_at) {
+            void supabase
+              .from("messages")
+              .update({ read_at: new Date().toISOString() })
+              .eq("id", m.id);
+          }
         }
       })
       .subscribe();

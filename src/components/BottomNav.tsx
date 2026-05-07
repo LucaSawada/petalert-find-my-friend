@@ -1,6 +1,7 @@
 import { NavLink } from "react-router-dom";
 import { Home, Map, PawPrint, MessageCircle, User } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useUnreadMessages } from "@/hooks/useUnreadMessages";
 
 const items = [
   { to: "/", icon: Home, label: "Início" },
@@ -11,6 +12,7 @@ const items = [
 ];
 
 export const BottomNav = () => {
+  const unread = useUnreadMessages();
   return (
     <nav
       aria-label="Navegação principal"
@@ -30,7 +32,14 @@ export const BottomNav = () => {
                 )
               }
             >
-              <Icon className="h-5 w-5" />
+              <span className="relative">
+                <Icon className="h-5 w-5" />
+                {to === "/chat" && unread > 0 && (
+                  <span className="absolute -top-1.5 -right-2 min-w-[18px] h-[18px] px-1 rounded-full bg-destructive text-destructive-foreground text-[10px] font-bold flex items-center justify-center">
+                    {unread > 9 ? "9+" : unread}
+                  </span>
+                )}
+              </span>
               <span>{label}</span>
             </NavLink>
           </li>
