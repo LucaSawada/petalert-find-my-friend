@@ -9,7 +9,7 @@ import { Tables } from "@/integrations/supabase/types";
 import { AppHeader } from "@/components/AppHeader";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
-import { getCurrentLocation } from "@/lib/geo";
+import { getCurrentLocation, watchLocation } from "@/lib/geo";
 import { timeAgo } from "@/lib/time";
 import { cn } from "@/lib/utils";
 
@@ -43,6 +43,8 @@ const MapView = () => {
   const [pets, setPets] = useState<Pet[]>([]);
   const [loading, setLoading] = useState(true);
   const [center, setCenter] = useState<{ lat: number; lng: number } | null>(null);
+  const [userPos, setUserPos] = useState<{ lat: number; lng: number } | null>(null);
+  const [followUser, setFollowUser] = useState(true);
 
   useEffect(() => {
     void (async () => {
@@ -55,12 +57,22 @@ const MapView = () => {
       try {
         const loc = await getCurrentLocation();
         setCenter({ lat: loc.latitude, lng: loc.longitude });
+        setUserPos({ lat: loc.latitude, lng: loc.longitude });
       } catch {
         if (data?.[0]?.latitude) setCenter({ lat: data[0].latitude, lng: data[0].longitude! });
       }
       setLoading(false);
     })();
   }, []);
+
+  // Acompanha posição em tempo real
+  useEffect(() => {
+    const stop = watchLocation(({ latitude, longitude }) => {
+      setUserPos({ lat: latitude, lng: longitude });
+      if (followUser) setCenter({ lat: latitude, lng: longitude });
+    });
+    return stop;
+  }, [followUser]);
 
   const initialCenter: [number, number] = center
     ? [center.lat, center.lng]
@@ -84,8 +96,8 @@ const MapView = () => {
               url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
             />
             <Recenter center={center} />
-            {center && (
-              <Marker position={[center.lat, center.lng]} icon={userIcon}>
+            {userPos && (
+              <Marker position={[userPos.lat, userPos.lng]} icon={userIcon}>
                 <Popup>Você está aqui</Popup>
               </Marker>
             )}
@@ -116,6 +128,8 @@ const MapView = () => {
             try {
               const loc = await getCurrentLocation();
               setCenter({ lat: loc.latitude, lng: loc.longitude });
+              setUserPos({ lat: loc.latitude, lng: loc.longitude });
+              setFollowUser(true);
             } catch {/* noop */}
           }}
         >
