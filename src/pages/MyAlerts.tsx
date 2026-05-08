@@ -36,11 +36,11 @@ const MyAlerts = () => {
   return (
     <>
       <AppHeader title="Meus alertas" subtitle="Acompanhe e gerencie seus casos" />
-      <div className="px-5 space-y-6">
+      <div className="px-5 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {loading ? (
           <Skeleton className="aspect-[4/3] rounded-2xl" />
         ) : pets.length === 0 ? (
-          <div className="text-center py-16">
+          <div className="text-center py-16 md:col-span-2 lg:col-span-3">
             <p className="font-serif text-xl mb-2">Você ainda não publicou alertas</p>
             <p className="text-sm text-muted-foreground">
               Toque no botão SOS para criar o primeiro.
@@ -49,15 +49,19 @@ const MyAlerts = () => {
         ) : (
           <>
             {active.length > 0 && (
-              <section className="space-y-3">
+              <section className="space-y-3 md:col-span-2 lg:col-span-3">
                 <h2 className="font-serif text-lg font-bold">Em andamento</h2>
-                {active.map((p) => <PetCard key={p.id} pet={p} />)}
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                  {active.map((p) => <PetCard key={p.id} pet={p} />)}
+                </div>
               </section>
             )}
             {found.length > 0 && (
-              <section className="space-y-3">
+              <section className="space-y-3 md:col-span-2 lg:col-span-3">
                 <h2 className="font-serif text-lg font-bold">Reencontros 🎉</h2>
-                {found.map((p) => <PetCard key={p.id} pet={p} />)}
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                  {found.map((p) => <PetCard key={p.id} pet={p} />)}
+                </div>
               </section>
             )}
           </>
