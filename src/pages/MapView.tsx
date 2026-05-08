@@ -137,14 +137,14 @@ const MapView = () => {
         </Button>
       </div>
 
-      <div className="px-5 space-y-2">
-        <h2 className="font-serif text-lg font-bold mb-2">Alertas ativos</h2>
+      <div className="px-5 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 mb-8">
+        <h2 className="font-serif text-lg font-bold mb-2 md:col-span-2 lg:col-span-3">Alertas ativos</h2>
         {pets.map((pet) => (
           <Link
             key={pet.id}
             to={`/pet/${pet.id}`}
             className={cn(
-              "flex items-center gap-3 p-3 rounded-xl bg-card border border-border",
+              "flex items-center gap-3 p-3 rounded-xl bg-card border border-border hover:bg-accent/40 transition-colors",
             )}
           >
             <img src={pet.photo_url ?? ""} alt="" className="h-14 w-14 rounded-lg object-cover bg-muted" />
