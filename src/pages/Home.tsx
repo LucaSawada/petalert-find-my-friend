@@ -85,14 +85,15 @@ const Home = () => {
         ))}
       </div>
 
-      <div className="px-5 space-y-4">
+      <div className="px-5 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {loading ? (
           <>
             <Skeleton className="aspect-[4/3] rounded-2xl" />
             <Skeleton className="aspect-[4/3] rounded-2xl" />
+            <Skeleton className="aspect-[4/3] rounded-2xl" />
           </>
         ) : filtered.length === 0 ? (
-          <div className="text-center py-16 text-muted-foreground">
+          <div className="text-center py-16 text-muted-foreground md:col-span-2 lg:col-span-3">
             <p className="font-serif text-xl mb-2">Nenhum alerta por aqui</p>
             <p className="text-sm">Toque no botão SOS para publicar o primeiro.</p>
           </div>
