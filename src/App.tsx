@@ -7,6 +7,7 @@ import { AuthProvider } from "@/hooks/useAuth";
 import { AppLayout } from "@/components/AppLayout";
 import Index from "./pages/Index.tsx";
 import NotFound from "./pages/NotFound.tsx";
+import Onboarding from "./pages/Onboarding.tsx";
 import Welcome from "./pages/Welcome.tsx";
 import Auth from "./pages/Auth.tsx";
 import CreateAlert from "./pages/CreateAlert.tsx";
@@ -27,6 +28,7 @@ const App = () => (
           <Toaster />
           <Sonner />
           <Routes>
+            <Route path="/onboarding" element={<Onboarding />} />
             <Route path="/welcome" element={<Welcome />} />
             <Route path="/auth" element={<Auth />} />
             <Route path="/criar" element={<CreateAlert />} />
