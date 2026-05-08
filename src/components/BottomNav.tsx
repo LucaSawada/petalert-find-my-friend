@@ -18,10 +18,9 @@ export const BottomNav = () => {
       aria-label="Navegação principal"
       className="fixed bottom-0 inset-x-0 z-30 bg-card/95 backdrop-blur border-t border-border safe-bottom"
     >
-      <ul className="grid grid-cols-5 max-w-md mx-auto">
+      <ul className="grid grid-cols-5 max-w-7xl mx-auto w-full">
         {items.map(({ to, icon: Icon, label }, i) => (
           <li key={to} className={cn(i === 2 && "invisible")}>
-            {/* Slot central reservado ao FAB SOS */}
             <NavLink
               to={to}
               end={to === "/"}
