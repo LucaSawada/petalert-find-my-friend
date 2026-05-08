@@ -10,7 +10,7 @@ const Welcome = () => {
 
   return (
     <div className="min-h-screen gradient-warm flex flex-col">
-      <div className="flex-1 flex flex-col justify-center px-8 max-w-md mx-auto w-full">
+      <div className="flex-1 flex flex-col justify-center px-8 max-w-xl mx-auto w-full">
         <div className="text-center mb-10">
           <div className="inline-flex h-20 w-20 rounded-3xl gradient-primary items-center justify-center mb-6 shadow-elegant">
             <PawPrint className="h-10 w-10 text-primary-foreground" />

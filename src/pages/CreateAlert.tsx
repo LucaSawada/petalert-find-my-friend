@@ -111,14 +111,14 @@ const CreateAlert = () => {
 
   return (
     <div className="min-h-screen bg-background pb-12">
-      <header className="px-5 pt-6 pb-4 flex items-center gap-3 sticky top-0 bg-background/95 backdrop-blur z-10 border-b border-border">
+      <header className="px-5 pt-6 pb-4 flex items-center gap-3 sticky top-0 bg-background/95 backdrop-blur z-10 border-b border-border max-w-7xl mx-auto w-full">
         <Link to="/" aria-label="Voltar" className="h-10 w-10 -ml-2 flex items-center justify-center rounded-full hover:bg-muted">
           <ArrowLeft className="h-5 w-5" />
         </Link>
         <h1 className="font-serif text-xl font-bold">Novo alerta</h1>
       </header>
 
-      <form onSubmit={handleSubmit} className="px-5 py-6 space-y-5">
+      <form onSubmit={handleSubmit} className="px-5 py-6 space-y-5 max-w-3xl mx-auto w-full">
         {/* Foto */}
         <button
           type="button"

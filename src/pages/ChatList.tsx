@@ -82,11 +82,11 @@ const ChatList = () => {
   return (
     <>
       <AppHeader title="Conversas" subtitle="Chats sobre alertas" />
-      <div className="px-5 space-y-2">
+      <div className="px-5 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
         {loading ? (
           <Skeleton className="h-20 rounded-xl" />
         ) : convs.length === 0 ? (
-          <div className="text-center py-16 text-muted-foreground">
+          <div className="text-center py-16 text-muted-foreground md:col-span-2 lg:col-span-3">
             <MessageCircle className="h-12 w-12 mx-auto mb-3 opacity-30" />
             <p className="font-serif text-xl mb-1">Nenhuma conversa ainda</p>
             <p className="text-sm">Quando alguém te contatar, vai aparecer aqui.</p>
@@ -96,7 +96,7 @@ const ChatList = () => {
             <Link
               key={`${c.pet_id}-${c.other_id}`}
               to={`/chat/${c.pet_id}/${c.other_id}`}
-              className="flex items-center gap-3 p-3 rounded-xl bg-card border border-border"
+              className="flex items-center gap-3 p-3 rounded-xl bg-card border border-border hover:bg-accent/40 transition-colors"
             >
               <img src={c.pet_photo ?? ""} alt="" className="h-14 w-14 rounded-lg object-cover bg-muted" />
               <div className="flex-1 min-w-0">

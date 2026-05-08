@@ -23,18 +23,18 @@ const Onboarding = () => {
     <div className="min-h-screen bg-background text-foreground">
       {/* Top bar */}
       <header className="sticky top-0 z-10 bg-background/80 backdrop-blur border-b border-border">
-        <div className="max-w-3xl mx-auto px-5 py-3 flex items-center justify-between">
+        <div className="max-w-6xl mx-auto px-5 py-3 flex items-center justify-between">
           <div className="flex items-center gap-2 text-primary">
             <PawPrint className="h-5 w-5" />
             <span className="text-sm font-bold uppercase tracking-widest">PetAlert</span>
           </div>
-          <Button asChild size="sm" className="rounded-full px-4 mr-14">
+          <Button asChild size="sm" className="rounded-full px-4">
             <Link to="/auth">Entrar</Link>
           </Button>
         </div>
       </header>
 
-      <main className="max-w-3xl mx-auto px-6 py-10 space-y-14">
+      <main className="max-w-6xl mx-auto px-6 py-10 space-y-14">
         {/* Hero */}
         <section className="text-center pt-4">
           <div className="inline-flex h-20 w-20 rounded-3xl gradient-primary items-center justify-center mb-6 shadow-elegant">

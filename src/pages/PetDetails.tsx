@@ -180,7 +180,7 @@ const PetDetails = () => {
 
       {/* Ações fixas */}
       <div className="fixed bottom-0 inset-x-0 bg-background/95 backdrop-blur border-t border-border p-4 safe-bottom">
-        <div className="max-w-md mx-auto flex gap-2">
+        <div className="max-w-7xl mx-auto w-full px-4 md:px-6 flex gap-2">
           {isOwner && !found && (
             <Button onClick={markAsFound} size="lg" className="flex-1 h-14 bg-success hover:bg-success/90 text-success-foreground">
               <CheckCircle2 className="h-5 w-5" /> Marcar como encontrado
