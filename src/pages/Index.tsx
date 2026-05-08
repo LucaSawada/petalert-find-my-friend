@@ -5,7 +5,7 @@ import Home from "./Home";
 const Index = () => {
   const { user, loading } = useAuth();
   if (loading) return null;
-  if (!user) return <Navigate to="/welcome" replace />;
+  if (!user) return <Navigate to="/onboarding" replace />;
   return <Home />;
 };
 
