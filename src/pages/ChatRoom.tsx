@@ -87,7 +87,7 @@ const ChatRoom = () => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-background">
+    <div className="min-h-screen flex flex-col bg-background max-w-3xl mx-auto w-full">
       <header className="px-4 py-3 flex items-center gap-3 border-b border-border bg-card sticky top-0 z-10">
         <Link to="/chat" aria-label="Voltar" className="h-10 w-10 -ml-2 flex items-center justify-center rounded-full hover:bg-muted">
           <ArrowLeft className="h-5 w-5" />
