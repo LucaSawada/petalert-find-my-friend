@@ -83,7 +83,7 @@ const MapView = () => {
       <AppHeader title="Mapa de alertas" subtitle="Pinos mostram pets perdidos próximos" />
 
       <div className="px-5 mb-4">
-        <div className="relative aspect-square rounded-2xl border border-border overflow-hidden shadow-card bg-muted">
+        <div className="relative h-[50vh] md:h-[60vh] rounded-2xl border border-border overflow-hidden shadow-card bg-muted">
           {loading && <Skeleton className="absolute inset-0 z-[500]" />}
           <MapContainer
             center={initialCenter}
