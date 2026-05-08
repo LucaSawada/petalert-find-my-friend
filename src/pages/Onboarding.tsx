@@ -1,167 +1,162 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { PawPrint, MapPin, MessageCircle, Search, ChevronRight, ChevronLeft } from "lucide-react";
-
-interface Slide {
-  icon: typeof PawPrint;
-  title: string;
-  description: string;
-  bullets?: string[];
-}
-
-const slides: Slide[] = [
-  {
-    icon: PawPrint,
-    title: "O que é o PetAlert?",
-    description:
-      "Uma rede solidária de tutores e amantes de animais que se unem para devolver pets perdidos para casa.",
-    bullets: [
-      "Plataforma acadêmica focada em UX para situações de urgência",
-      "100% gratuita e colaborativa",
-      "Funciona em qualquer lugar do Brasil",
-    ],
-  },
-  {
-    icon: MapPin,
-    title: "Como funciona?",
-    description:
-      "Três pilares simples e rápidos para reunir famílias:",
-    bullets: [
-      "Crie um alerta em menos de 30 segundos com foto e GPS automático",
-      "Pessoas próximas ao local veem o alerta no mapa em tempo real",
-      "Quem encontrar entra em contato pelo chat integrado",
-    ],
-  },
-  {
-    icon: Search,
-    title: "Quem pode usar?",
-    description:
-      "Qualquer pessoa que queira ajudar ou precise de ajuda:",
-    bullets: [
-      "Tutores que perderam seu pet — publique o alerta rapidamente",
-      "Quem encontrou um animal na rua — avise pelo app",
-      "Comunidade local — acompanhe alertas próximos ao seu bairro",
-    ],
-  },
-  {
-    icon: MessageCircle,
-    title: "Pronto para começar?",
-    description:
-      "Cadastre-se gratuitamente e faça parte da rede de reencontros.",
-  },
-];
+import {
+  PawPrint,
+  MapPin,
+  MessageCircle,
+  Search,
+  Heart,
+  Clock,
+  Users,
+  Moon,
+  Sun,
+  ChevronRight,
+} from "lucide-react";
+import { useAuth } from "@/hooks/useAuth";
+import { useTheme } from "@/hooks/useTheme";
 
 const Onboarding = () => {
-  const [current, setCurrent] = useState(0);
+  const { user, loading } = useAuth();
+  const { theme, toggle } = useTheme();
   const navigate = useNavigate();
-  const slide = slides[current];
-  const Icon = slide.icon;
-  const isLast = current === slides.length - 1;
 
-  const next = () => {
-    if (isLast) {
-      navigate("/welcome");
-    } else {
-      setCurrent((c) => c + 1);
-    }
-  };
-
-  const prev = () => setCurrent((c) => Math.max(0, c - 1));
-
-  const goTo = (index: number) => setCurrent(index);
+  if (loading) return null;
+  if (user) return <Navigate to="/" replace />;
 
   return (
-    <div className="min-h-screen bg-background flex flex-col">
-      {/* Topo com skip */}
-      <div className="flex justify-end px-6 pt-8 pb-2">
-        {!isLast && (
-          <button
-            onClick={() => navigate("/welcome")}
-            className="text-sm text-muted-foreground hover:text-foreground transition-colors"
-          >
-            Pular
-          </button>
-        )}
-      </div>
-
-      {/* Conteúdo do slide */}
-      <div className="flex-1 flex flex-col justify-center px-8 max-w-md mx-auto w-full">
-        <div className="text-center mb-8">
-          <div className="inline-flex h-24 w-24 rounded-full gradient-primary items-center justify-center mb-6 shadow-elegant">
-            <Icon className="h-12 w-12 text-primary-foreground" />
+    <div className="min-h-screen bg-background text-foreground">
+      {/* Top bar */}
+      <header className="sticky top-0 z-10 bg-background/80 backdrop-blur border-b border-border">
+        <div className="max-w-3xl mx-auto px-5 py-3 flex items-center justify-between">
+          <div className="flex items-center gap-2 text-primary">
+            <PawPrint className="h-5 w-5" />
+            <span className="text-sm font-bold uppercase tracking-widest">PetAlert</span>
           </div>
-          <h2 className="font-serif text-3xl font-bold text-foreground mb-4">
-            {slide.title}
-          </h2>
-          <p className="text-base text-muted-foreground leading-relaxed">
-            {slide.description}
+          <div className="flex items-center gap-2">
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={toggle}
+              aria-label={theme === "dark" ? "Modo claro" : "Modo escuro"}
+              className="rounded-full"
+            >
+              {theme === "dark" ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
+            </Button>
+            <Button asChild size="sm" className="rounded-full px-4">
+              <Link to="/auth">Entrar</Link>
+            </Button>
+          </div>
+        </div>
+      </header>
+
+      <main className="max-w-3xl mx-auto px-6 py-10 space-y-14">
+        {/* Hero */}
+        <section className="text-center pt-4">
+          <div className="inline-flex h-20 w-20 rounded-3xl gradient-primary items-center justify-center mb-6 shadow-elegant">
+            <PawPrint className="h-10 w-10 text-primary-foreground" />
+          </div>
+          <h1 className="font-serif text-4xl sm:text-5xl font-bold mb-4">
+            O que é o PetAlert?
+          </h1>
+          <p className="text-base sm:text-lg text-muted-foreground leading-relaxed max-w-2xl mx-auto">
+            Uma rede solidária de tutores e amantes de animais que se unem para
+            devolver pets perdidos para casa. Plataforma 100% gratuita, colaborativa,
+            que funciona em qualquer lugar do Brasil.
           </p>
-        </div>
+        </section>
 
-        {slide.bullets && (
-          <ul className="space-y-3 mb-8">
-            {slide.bullets.map((b, i) => (
-              <li key={i} className="flex gap-3 items-start">
-                <div className="h-6 w-6 rounded-full bg-success/15 text-success flex items-center justify-center shrink-0 mt-0.5">
-                  <Search className="h-3.5 w-3.5" />
-                </div>
-                <span className="text-sm text-foreground leading-relaxed">{b}</span>
-              </li>
-            ))}
-          </ul>
-        )}
-      </div>
-
-      {/* Indicadores + navegação */}
-      <div className="px-8 pb-10 pt-4 max-w-md mx-auto w-full">
-        <div className="flex items-center justify-center gap-2 mb-8">
-          {slides.map((_, i) => (
-            <button
-              key={i}
-              onClick={() => goTo(i)}
-              className={`h-2.5 rounded-full transition-all duration-300 ${
-                i === current
-                  ? "w-8 bg-primary"
-                  : "w-2.5 bg-primary/20 hover:bg-primary/40"
-              }`}
-              aria-label={`Ir para slide ${i + 1}`}
+        {/* Como funciona */}
+        <section>
+          <h2 className="font-serif text-2xl sm:text-3xl font-bold mb-6 text-center">
+            Como funciona?
+          </h2>
+          <div className="grid sm:grid-cols-3 gap-4">
+            <Pillar
+              icon={Clock}
+              title="Alerta em <30s"
+              desc="Tire a foto, capture o GPS e publique. O fluxo foi pensado para emergências."
             />
-          ))}
-        </div>
+            <Pillar
+              icon={MapPin}
+              title="Mapa em tempo real"
+              desc="Pessoas próximas veem o alerta no mapa imediatamente após a publicação."
+            />
+            <Pillar
+              icon={MessageCircle}
+              title="Chat integrado"
+              desc="Quem encontrou conversa diretamente com o tutor para combinar a entrega."
+            />
+          </div>
+        </section>
 
-        <div className="flex gap-3">
-          {current > 0 && (
+        {/* Quem pode usar */}
+        <section>
+          <h2 className="font-serif text-2xl sm:text-3xl font-bold mb-6 text-center">
+            Quem pode usar?
+          </h2>
+          <ul className="space-y-3 max-w-2xl mx-auto">
+            <Bullet icon={Heart} text="Tutores que perderam seu pet — publique o alerta rapidamente." />
+            <Bullet icon={Search} text="Quem encontrou um animal na rua — avise pelo app em segundos." />
+            <Bullet icon={Users} text="Comunidade local — acompanhe alertas próximos ao seu bairro e ajude." />
+          </ul>
+        </section>
+
+        {/* CTA */}
+        <section className="text-center pt-4 pb-16">
+          <h2 className="font-serif text-2xl sm:text-3xl font-bold mb-3">
+            Pronto para começar?
+          </h2>
+          <p className="text-muted-foreground mb-6">
+            Cadastre-se gratuitamente e faça parte da rede de reencontros.
+          </p>
+          <div className="flex flex-col sm:flex-row gap-3 justify-center">
+            <Button
+              size="lg"
+              className="h-14 text-base shadow-elegant px-8"
+              onClick={() => navigate("/auth?mode=signup")}
+            >
+              Criar minha conta <ChevronRight className="h-5 w-5 ml-1" />
+            </Button>
             <Button
               variant="outline"
               size="lg"
-              onClick={prev}
-              className="h-14 w-14 shrink-0 rounded-full"
+              className="h-14 text-base px-8"
+              onClick={() => navigate("/auth")}
             >
-              <ChevronLeft className="h-5 w-5" />
+              Já tenho conta
             </Button>
-          )}
-          <Button
-            size="lg"
-            onClick={next}
-            className={`h-14 text-base shadow-elegant ${
-              current > 0 ? "flex-1" : "w-full"
-            }`}
-          >
-            {isLast ? (
-              <>
-                Começar agora <ChevronRight className="h-5 w-5 ml-1" />
-              </>
-            ) : (
-              <>
-                Próximo <ChevronRight className="h-5 w-5 ml-1" />
-              </>
-            )}
-          </Button>
-        </div>
-      </div>
+          </div>
+        </section>
+      </main>
     </div>
   );
 };
+
+const Pillar = ({
+  icon: Icon,
+  title,
+  desc,
+}: {
+  icon: typeof PawPrint;
+  title: string;
+  desc: string;
+}) => (
+  <div className="rounded-2xl border border-border bg-card p-5 shadow-card">
+    <div className="h-10 w-10 rounded-xl bg-primary/10 text-primary flex items-center justify-center mb-3">
+      <Icon className="h-5 w-5" />
+    </div>
+    <h3 className="font-semibold text-card-foreground mb-1">{title}</h3>
+    <p className="text-sm text-muted-foreground leading-relaxed">{desc}</p>
+  </div>
+);
+
+const Bullet = ({ icon: Icon, text }: { icon: typeof PawPrint; text: string }) => (
+  <li className="flex gap-3 items-start rounded-xl border border-border bg-card p-4">
+    <div className="h-8 w-8 rounded-lg bg-success/15 text-success flex items-center justify-center shrink-0">
+      <Icon className="h-4 w-4" />
+    </div>
+    <span className="text-sm sm:text-base text-card-foreground leading-relaxed">{text}</span>
+  </li>
+);
 
 export default Onboarding;
