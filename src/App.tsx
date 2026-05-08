@@ -5,6 +5,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { AuthProvider } from "@/hooks/useAuth";
 import { AppLayout } from "@/components/AppLayout";
+import { ThemeToggle } from "@/components/ThemeToggle";
 import Index from "./pages/Index.tsx";
 import NotFound from "./pages/NotFound.tsx";
 import Onboarding from "./pages/Onboarding.tsx";
@@ -27,6 +28,9 @@ const App = () => (
         <TooltipProvider>
           <Toaster />
           <Sonner />
+          <div className="fixed top-3 right-3 z-50">
+            <ThemeToggle />
+          </div>
           <Routes>
             <Route path="/onboarding" element={<Onboarding />} />
             <Route path="/welcome" element={<Welcome />} />

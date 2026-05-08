@@ -8,16 +8,12 @@ import {
   Heart,
   Clock,
   Users,
-  Moon,
-  Sun,
   ChevronRight,
 } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
-import { useTheme } from "@/hooks/useTheme";
 
 const Onboarding = () => {
   const { user, loading } = useAuth();
-  const { theme, toggle } = useTheme();
   const navigate = useNavigate();
 
   if (loading) return null;
@@ -32,20 +28,9 @@ const Onboarding = () => {
             <PawPrint className="h-5 w-5" />
             <span className="text-sm font-bold uppercase tracking-widest">PetAlert</span>
           </div>
-          <div className="flex items-center gap-2">
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={toggle}
-              aria-label={theme === "dark" ? "Modo claro" : "Modo escuro"}
-              className="rounded-full"
-            >
-              {theme === "dark" ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
-            </Button>
-            <Button asChild size="sm" className="rounded-full px-4">
-              <Link to="/auth">Entrar</Link>
-            </Button>
-          </div>
+          <Button asChild size="sm" className="rounded-full px-4 mr-14">
+            <Link to="/auth">Entrar</Link>
+          </Button>
         </div>
       </header>
 
@@ -73,7 +58,7 @@ const Onboarding = () => {
           <div className="grid sm:grid-cols-3 gap-4">
             <Pillar
               icon={Clock}
-              title="Alerta em <30s"
+              title="Alerta em menos de 30 segundos"
               desc="Tire a foto, capture o GPS e publique. O fluxo foi pensado para emergências."
             />
             <Pillar
