@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import { ArrowLeft, MapPin, Clock, MessageCircle, Phone, CheckCircle2 } from "lucide-react";
+import { ArrowLeft, MapPin, Clock, MessageCircle, Phone, CheckCircle2, Trash2, ShieldCheck } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { supabase } from "@/integrations/supabase/client";
 import { Tables } from "@/integrations/supabase/types";
 import { useAuth } from "@/hooks/useAuth";
+import { useIsAdmin } from "@/hooks/useIsAdmin";
 import { useToast } from "@/hooks/use-toast";
 import { timeAgo } from "@/lib/time";
 import { Confetti } from "@/components/Confetti";
@@ -19,6 +20,7 @@ const speciesLabel: Record<string, string> = { dog: "Cão", cat: "Gato", other: 
 const PetDetails = () => {
   const { id } = useParams<{ id: string }>();
   const { user } = useAuth();
+  const isAdmin = useIsAdmin();
   const navigate = useNavigate();
   const { toast } = useToast();
   const [pet, setPet] = useState<Pet | null>(null);
@@ -71,6 +73,32 @@ const PetDetails = () => {
       return;
     }
     navigate(`/chat/${pet?.id}/${pet?.user_id}`);
+  };
+
+  const adminDelete = async () => {
+    if (!pet) return;
+    if (!window.confirm(`Excluir definitivamente o alerta de ${pet.name}?`)) return;
+    const { error } = await supabase.from("pets").delete().eq("id", pet.id);
+    if (error) {
+      toast({ title: "Erro ao excluir", description: error.message, variant: "destructive" });
+    } else {
+      toast({ title: "Alerta excluído" });
+      navigate("/");
+    }
+  };
+
+  const adminToggleFound = async () => {
+    if (!pet) return;
+    const newStatus = pet.status === "found" ? "active" : "found";
+    const { error } = await supabase
+      .from("pets")
+      .update({
+        status: newStatus,
+        found_at: newStatus === "found" ? new Date().toISOString() : null,
+      })
+      .eq("id", pet.id);
+    if (error) toast({ title: "Erro", description: error.message, variant: "destructive" });
+    else toast({ title: "Status atualizado" });
   };
 
   if (loading) {
@@ -128,6 +156,21 @@ const PetDetails = () => {
       </div>
 
       <div className="px-5 py-6 space-y-5">
+        {isAdmin && (
+          <div className="rounded-2xl border border-primary/30 bg-primary/5 p-4 space-y-3">
+            <div className="flex items-center gap-2 text-primary font-semibold text-sm">
+              <ShieldCheck className="h-4 w-4" /> Painel admin
+            </div>
+            <div className="flex flex-wrap gap-2">
+              <Button size="sm" variant="outline" onClick={adminToggleFound}>
+                {pet.status === "found" ? "Marcar como ativo" : "Marcar como encontrado"}
+              </Button>
+              <Button size="sm" variant="destructive" onClick={adminDelete}>
+                <Trash2 className="h-4 w-4" /> Excluir alerta
+              </Button>
+            </div>
+          </div>
+        )}
         <div>
           <div className="flex items-baseline justify-between gap-3">
             <h1 className="font-serif text-4xl font-bold">{pet.name}</h1>
