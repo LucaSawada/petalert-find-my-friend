@@ -6,6 +6,10 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { AuthProvider } from "@/hooks/useAuth";
 import { AppLayout } from "@/components/AppLayout";
 import { ThemeToggle } from "@/components/ThemeToggle";
+import { FontSizeToggle } from "@/components/FontSizeToggle";
+import { LanguageToggle } from "@/components/LanguageToggle";
+import { I18nProvider } from "@/hooks/useI18n";
+import { FontSizeProvider } from "@/hooks/useFontSize";
 import Index from "./pages/Index.tsx";
 import NotFound from "./pages/NotFound.tsx";
 import Onboarding from "./pages/Onboarding.tsx";
@@ -25,10 +29,14 @@ const App = () => (
   <QueryClientProvider client={queryClient}>
     <BrowserRouter>
       <AuthProvider>
+        <I18nProvider>
+        <FontSizeProvider>
         <TooltipProvider>
           <Toaster />
           <Sonner />
-          <div className="fixed top-3 right-3 z-50">
+          <div className="fixed top-3 right-3 z-50 flex items-center gap-2">
+            <FontSizeToggle />
+            <LanguageToggle />
             <ThemeToggle />
           </div>
           <Routes>
@@ -49,6 +57,8 @@ const App = () => (
             <Route path="*" element={<NotFound />} />
           </Routes>
         </TooltipProvider>
+        </FontSizeProvider>
+        </I18nProvider>
       </AuthProvider>
     </BrowserRouter>
   </QueryClientProvider>
