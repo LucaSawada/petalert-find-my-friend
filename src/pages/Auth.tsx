@@ -6,7 +6,8 @@ import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/useAuth";
-import { ArrowLeft, PawPrint } from "lucide-react";
+import { ArrowLeft, PawPrint, Eye, EyeOff } from "lucide-react";
+import { useI18n } from "@/hooks/useI18n";
 
 const Auth = () => {
   const [params] = useSearchParams();
@@ -17,9 +18,11 @@ const Auth = () => {
   const [fullName, setFullName] = useState("");
   const [phone, setPhone] = useState("");
   const [submitting, setSubmitting] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
   const { toast } = useToast();
   const navigate = useNavigate();
   const { user, loading } = useAuth();
+  const { t } = useI18n();
 
   useEffect(() => {
     setMode(initialMode);
@@ -69,7 +72,7 @@ const Auth = () => {
     <div className="min-h-screen bg-background">
       <div className="max-w-xl mx-auto px-6 pt-12 pb-8 w-full">
         <Link to="/welcome" className="inline-flex items-center gap-2 text-muted-foreground mb-6">
-          <ArrowLeft className="h-4 w-4" /> Voltar
+          <ArrowLeft className="h-4 w-4" /> {t("common.back")}
         </Link>
 
         <div className="flex items-center gap-2 text-primary mb-2">
@@ -77,30 +80,27 @@ const Auth = () => {
           <span className="text-xs font-bold uppercase tracking-widest">PetAlert</span>
         </div>
         <h1 className="font-serif text-3xl font-bold mb-2">
-          {mode === "signup" ? "Criar conta" : "Entrar"}
+          {mode === "signup" ? t("auth.signupTitle") : t("auth.signinTitle")}
         </h1>
         <p className="text-muted-foreground mb-8">
-          {mode === "signup"
-            ? "Cadastre-se para publicar e acompanhar alertas."
-            : "Acesse para continuar ajudando."}
+          {mode === "signup" ? t("auth.signupSub") : t("auth.signinSub")}
         </p>
 
         <form onSubmit={handleSubmit} className="space-y-4">
           {mode === "signup" && (
             <>
               <div>
-                <Label htmlFor="name">Nome completo</Label>
+                <Label htmlFor="name">{t("common.fullName")}</Label>
                 <Input
                   id="name"
                   required
                   value={fullName}
                   onChange={(e) => setFullName(e.target.value)}
                   className="h-12 mt-1.5"
-                  placeholder="Seu nome"
                 />
               </div>
               <div>
-                <Label htmlFor="phone">Telefone (WhatsApp)</Label>
+                <Label htmlFor="phone">{t("common.phone")}</Label>
                 <Input
                   id="phone"
                   type="tel"
@@ -113,7 +113,7 @@ const Auth = () => {
             </>
           )}
           <div>
-            <Label htmlFor="email">E-mail</Label>
+            <Label htmlFor="email">{t("common.email")}</Label>
             <Input
               id="email"
               type="email"
@@ -126,32 +126,40 @@ const Auth = () => {
             />
           </div>
           <div>
-            <Label htmlFor="password">Senha</Label>
-            <Input
-              id="password"
-              type="password"
-              required
-              minLength={6}
-              autoComplete={mode === "signup" ? "new-password" : "current-password"}
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              className="h-12 mt-1.5"
-              placeholder="Mínimo 6 caracteres"
-            />
+            <Label htmlFor="password">{t("common.password")}</Label>
+            <div className="relative mt-1.5">
+              <Input
+                id="password"
+                type={showPassword ? "text" : "password"}
+                required
+                autoComplete={mode === "signup" ? "new-password" : "current-password"}
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                className="h-12 pr-12"
+              />
+              <button
+                type="button"
+                onClick={() => setShowPassword((s) => !s)}
+                aria-label={showPassword ? t("common.hidePassword") : t("common.showPassword")}
+                className="absolute inset-y-0 right-0 px-3 flex items-center text-muted-foreground hover:text-foreground"
+              >
+                {showPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
+              </button>
+            </div>
           </div>
 
           <Button type="submit" size="lg" disabled={submitting} className="w-full h-14 text-base shadow-elegant">
-            {submitting ? "Aguarde..." : mode === "signup" ? "Criar conta" : "Entrar"}
+            {submitting ? t("common.wait") : mode === "signup" ? t("common.signup") : t("common.signin")}
           </Button>
         </form>
 
         <p className="text-center text-sm text-muted-foreground mt-6">
-          {mode === "signup" ? "Já tem conta?" : "Não tem conta ainda?"}{" "}
+          {mode === "signup" ? t("auth.haveAccount") : t("auth.noAccount")}{" "}
           <button
             onClick={() => setMode(mode === "signup" ? "signin" : "signup")}
             className="text-primary font-semibold underline-offset-4 hover:underline"
           >
-            {mode === "signup" ? "Entrar" : "Criar conta"}
+            {mode === "signup" ? t("common.signin") : t("common.signup")}
           </button>
         </p>
       </div>

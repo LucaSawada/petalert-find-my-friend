@@ -6,16 +6,18 @@ import { AppHeader } from "@/components/AppHeader";
 import { Skeleton } from "@/components/ui/skeleton";
 import { cn } from "@/lib/utils";
 import { useToast } from "@/hooks/use-toast";
+import { useI18n } from "@/hooks/useI18n";
+import type { TranslationKey } from "@/lib/translations";
 
 type Pet = Tables<"pets">;
 type Filter = "all" | "dog" | "cat" | "other" | "found";
 
-const filters: { id: Filter; label: string }[] = [
-  { id: "all", label: "Todos" },
-  { id: "dog", label: "Cães" },
-  { id: "cat", label: "Gatos" },
-  { id: "other", label: "Outros" },
-  { id: "found", label: "Encontrados" },
+const filters: { id: Filter; key: TranslationKey }[] = [
+  { id: "all", key: "home.filter.all" },
+  { id: "dog", key: "home.filter.dog" },
+  { id: "cat", key: "home.filter.cat" },
+  { id: "other", key: "home.filter.other" },
+  { id: "found", key: "home.filter.found" },
 ];
 
 const Home = () => {
@@ -23,6 +25,7 @@ const Home = () => {
   const [loading, setLoading] = useState(true);
   const [filter, setFilter] = useState<Filter>("all");
   const { toast } = useToast();
+  const { t } = useI18n();
 
   useEffect(() => {
     void fetchPets();
@@ -60,7 +63,7 @@ const Home = () => {
 
   return (
     <>
-      <AppHeader title="Pets perto de você" subtitle="Toque em um card para ver detalhes" />
+      <AppHeader title={t("home.title")} subtitle={t("home.subtitle")} />
 
       <div
         role="tablist"
@@ -80,7 +83,7 @@ const Home = () => {
                 : "bg-card text-muted-foreground border border-border",
             )}
           >
-            {f.label}
+            {t(f.key)}
           </button>
         ))}
       </div>
@@ -94,8 +97,8 @@ const Home = () => {
           </>
         ) : filtered.length === 0 ? (
           <div className="text-center py-16 text-muted-foreground md:col-span-2 lg:col-span-3">
-            <p className="font-serif text-xl mb-2">Nenhum alerta por aqui</p>
-            <p className="text-sm">Toque no botão SOS para publicar o primeiro.</p>
+            <p className="font-serif text-xl mb-2">{t("home.empty.title")}</p>
+            <p className="text-sm">{t("home.empty.desc")}</p>
           </div>
         ) : (
           filtered.map((pet) => <PetCard key={pet.id} pet={pet} />)
