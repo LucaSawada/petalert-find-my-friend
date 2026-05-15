@@ -10,6 +10,7 @@ import { FontSizeToggle } from "@/components/FontSizeToggle";
 import { LanguageToggle } from "@/components/LanguageToggle";
 import { I18nProvider } from "@/hooks/useI18n";
 import { FontSizeProvider } from "@/hooks/useFontSize";
+import ScrollToTop from "@/components/ScrollToTop";
 import Index from "./pages/Index.tsx";
 import NotFound from "./pages/NotFound.tsx";
 import Onboarding from "./pages/Onboarding.tsx";
@@ -28,6 +29,7 @@ const queryClient = new QueryClient();
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <BrowserRouter>
+      <ScrollToTop />
       <AuthProvider>
         <I18nProvider>
         <FontSizeProvider>
