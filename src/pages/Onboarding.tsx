@@ -25,12 +25,12 @@ const Onboarding = () => {
     <div className="min-h-screen bg-background text-foreground">
       {/* Top bar */}
       <header className="sticky top-0 z-10 bg-background/80 backdrop-blur border-b border-border">
-        <div className="max-w-6xl mx-auto px-5 py-3 flex items-center justify-between">
+        <div className="max-w-6xl mx-auto pl-5 pr-5 sm:pr-44 py-3 flex items-center justify-between gap-3">
           <div className="flex items-center gap-2 text-primary">
             <PawPrint className="h-5 w-5" />
             <span className="text-sm font-bold uppercase tracking-widest">PetAlert</span>
           </div>
-          <Button asChild size="sm" className="rounded-full px-4">
+          <Button asChild size="sm" className="rounded-full px-4 hidden sm:inline-flex">
             <Link to="/auth">{t("common.signin")}</Link>
           </Button>
         </div>
