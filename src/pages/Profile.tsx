@@ -28,7 +28,7 @@ const Profile = () => {
   }, [user]);
 
   if (authLoading) return null;
-  if (!user) return <Navigate to="/welcome" replace />;
+  if (!user) return <Navigate to="/onboarding" replace />;
 
   const save = async (e: React.FormEvent) => {
     e.preventDefault();

@@ -28,7 +28,7 @@ const MyAlerts = () => {
   }, [user]);
 
   if (authLoading) return null;
-  if (!user) return <Navigate to="/welcome" replace />;
+  if (!user) return <Navigate to="/onboarding" replace />;
 
   const active = pets.filter((p) => p.status === "active");
   const found = pets.filter((p) => p.status === "found");

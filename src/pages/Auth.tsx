@@ -71,7 +71,7 @@ const Auth = () => {
   return (
     <div className="min-h-screen bg-background">
       <div className="max-w-xl mx-auto px-6 pt-12 pb-8 w-full">
-        <Link to="/welcome" className="inline-flex items-center gap-2 text-muted-foreground mb-6">
+        <Link to="/onboarding" className="inline-flex items-center gap-2 text-muted-foreground mb-6">
           <ArrowLeft className="h-4 w-4" /> {t("common.back")}
         </Link>
 

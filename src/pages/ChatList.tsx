@@ -77,7 +77,7 @@ const ChatList = () => {
   }, [user]);
 
   if (authLoading) return null;
-  if (!user) return <Navigate to="/welcome" replace />;
+  if (!user) return <Navigate to="/onboarding" replace />;
 
   return (
     <>
