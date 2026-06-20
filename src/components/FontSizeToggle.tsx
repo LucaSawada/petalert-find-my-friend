@@ -1,4 +1,4 @@
-import { Accessibility } from "lucide-react";
+import accessibilityIcon from "@/assets/accessibility-icon.png";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -31,7 +31,12 @@ export const FontSizeToggle = ({ className }: { className?: string }) => {
           title={t("settings.fontSize")}
           className={cn("rounded-full shadow-card bg-background/90 backdrop-blur", className)}
         >
-          <Accessibility className="h-4 w-4" />
+          <img
+            src={accessibilityIcon}
+            alt=""
+            className="h-5 w-5 object-contain"
+            aria-hidden="true"
+          />
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" sideOffset={6}>
