@@ -31,7 +31,7 @@ export const FontSizeToggle = ({ className }: { className?: string }) => {
           title={t("settings.fontSize")}
           className={cn("rounded-full shadow-card bg-background/90 backdrop-blur", className)}
         >
-          <div className="h-5 w-5 flex items-center justify-center rounded-full dark:bg-white/90 p-0.5">
+          <div className="h-5 w-5 flex items-center justify-center rounded-full dark:bg-white dark:p-1">
             <img
               src={accessibilityIcon}
               alt=""
