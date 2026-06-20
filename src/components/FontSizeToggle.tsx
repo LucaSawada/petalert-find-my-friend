@@ -31,12 +31,14 @@ export const FontSizeToggle = ({ className }: { className?: string }) => {
           title={t("settings.fontSize")}
           className={cn("rounded-full shadow-card bg-background/90 backdrop-blur", className)}
         >
-          <img
-            src={accessibilityIcon}
-            alt=""
-            className="h-5 w-5 object-contain"
-            aria-hidden="true"
-          />
+          <div className="h-5 w-5 flex items-center justify-center rounded-full dark:bg-white dark:p-1">
+            <img
+              src={accessibilityIcon}
+              alt=""
+              className="h-full w-full object-contain"
+              aria-hidden="true"
+            />
+          </div>
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" sideOffset={6}>
