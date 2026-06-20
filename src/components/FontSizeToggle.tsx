@@ -1,4 +1,4 @@
-import { Accessibility } from "lucide-react";
+import accessibilityIcon from "@/assets/accessibility-icon.png";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
